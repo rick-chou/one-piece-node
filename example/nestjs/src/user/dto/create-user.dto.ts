@@ -15,8 +15,8 @@ export class CreateUserDto {
   @IsNotEmpty({ message: 'missing password' })
   readonly password: string;
 
-  @ApiProperty({ description: 'password' })
-  @IsNotEmpty({ message: 'missing password' })
+  @ApiProperty({ description: 'role' })
+  @IsNotEmpty({ message: 'missing role' })
   @IsEnum(UserRole, { message: 'invalid role' })
   readonly role: string;
 

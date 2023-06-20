@@ -10,12 +10,15 @@ export class UserService {
     @InjectRepository(User)
     private userRepository: Repository<User>,
   ) {}
-  async register(createUser: CreateUserDto) {
-    const { username } = createUser;
 
-    const existUser = await this.userRepository.findOne({
+  async getUser({ username }: Partial<User>) {
+    return await this.userRepository.findOne({
       where: { username },
     });
+  }
+
+  async register(createUser: CreateUserDto) {
+    const existUser = await this.getUser(createUser);
     if (existUser) {
       throw new HttpException(
         'username already exists',

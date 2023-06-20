@@ -1,3 +1,4 @@
+import { Public } from '@/annotation/public';
 import {
   Body,
   ClassSerializerInterceptor,
@@ -6,17 +7,18 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
+import { LocalAuthGuard } from './local-auth.guard';
 
 @ApiTags('Login')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @UseGuards(AuthGuard('local'))
+  @Public()
+  @UseGuards(LocalAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Post('login')
   async login(@Body() user: LoginDto) {
